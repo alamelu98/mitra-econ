@@ -14,10 +14,14 @@ const getAllPrints=asyncWrapper (async (req,res)=>
     
 })
 
+
 const postPrints=asyncWrapper(async (req,res)=>
 {
 
-    const prints=await Prints.create({...req.body})
+    console.log(req.file,"pppp")
+    console.log(req.body)
+    const data_req={...req.body,productImage:req.file.path}
+    const prints=await Prints.create(data_req)
 
         res.status(StatusCode.OK).json({
             prints
@@ -62,4 +66,5 @@ const getEachPrints=asyncWrapper(async(req,res)=>
         prints:prints
     })
 })
+
 module.exports={getAllPrints,postPrints,UpdatePrints,deletePrints,getEachPrints}

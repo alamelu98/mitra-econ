@@ -26,7 +26,10 @@ const PrintsSchema=mongoose.Schema({
         type:Boolean,
         required:[true,"stock availablity should be mentioned"],
         default:false
-    }
+    },
+     productImage: {
+         type: String, 
+         required: true }
 
 
 })

@@ -14,11 +14,13 @@ const notFound=require("./middleware/not_found")
 const error_handler=require("./middleware/error_handles")
 const adminAuth=require("./middleware/adminAuth")
 const userAuth=require("./middleware/userAuth")
+const bodyParser = require("body-parser");
 const helmet=require("helmet");
 const cors=require("cors")
 const xss=require("xss-clean")
 const rateLimiter=require("express-rate-limit")
 
+app.use(express.json())
 
 
 
@@ -26,8 +28,16 @@ const rateLimiter=require("express-rate-limit")
 mongoose.set('strictQuery', true);
 
 
-app.use(express.json())
 
+
+app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    })
+  );
+
+
+  
 app.use(helmet())
 app.use(cors())
 app.use(xss())
@@ -37,6 +47,7 @@ app.get("/",(req,res)=>
     res.send("Ecom api/")
 })
 
+app.use('/uploads',express.static('uploads'))
 app.use("/admin",adminRoute)
 app.use("/user",userSignupRoute)
 app.use("/prints",printRoute)
